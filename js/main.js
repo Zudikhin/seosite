@@ -34,4 +34,49 @@ $(document).ready(function() {
     $(this).parent().find(".single_block_sidebar_body").slideToggle();
   });
 
+  $('.who_slider').slick({
+      slidesToShow: 8,
+      slidesToScroll: 1,
+      prevArrow: $('.who_prev'),
+      nextArrow: $('.who_next'),
+      responsive: [
+        {
+          breakpoint: 1600,
+              settings: {
+                  slidesToShow: 7
+              }
+          },
+          {
+          breakpoint: 1440,
+              settings: {
+                  slidesToShow: 6
+              }
+          },
+          {
+          breakpoint: 1200,
+              settings: {
+                  slidesToShow: 5
+              }
+          },
+          {
+          breakpoint: 1024,
+              settings: {
+                  slidesToShow: 4
+              }
+          },
+          {
+          breakpoint: 767,
+              settings: {
+                  slidesToShow: 3
+              }
+          },
+          {
+          breakpoint: 575,
+              settings: {
+                  slidesToShow: 2
+              }
+          }
+      ]
+  });
+
 });
