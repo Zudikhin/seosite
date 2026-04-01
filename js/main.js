@@ -1,6 +1,68 @@
 $(document).ready(function() {
   "use strict";
 
+	//  scrolling
+	
+	const observer = new IntersectionObserver(function (entries, obs) {
+		entries.forEach(function (entry) {
+			if (!entry.isIntersecting) return;
+
+			const $block = $(entry.target);
+
+			if ($block.hasClass('speedometer')) {
+				animateSpeedometer($block);
+			}
+
+			if ($block.hasClass('traffic')) {
+				animateTraffic($block);
+			}
+
+			if ($block.hasClass('timeline_section')) {
+				animateTimeline($block);
+			}
+
+			obs.unobserve(entry.target);
+		});
+	}, {
+		threshold: 0.5
+	});
+
+	$('.speedometer, .traffic, .timeline_section').each(function() {
+		observer.observe(this);
+	});
+
+	function animateSpeedometer($block) {
+		$(".speedometer").addClass("fill");
+	}
+
+	function animateTraffic($block) {
+		$(".traffic").addClass("fill");
+
+		const $span = $(".traffic_line span");
+
+		$({countNum: 0}).animate(
+			{countNum: 97},
+			{
+				duration: 1000,
+				easing: 'swing',
+				step: function () {
+					$span.text(Math.floor(this.countNum) + '%');
+				},
+				complete: function () {
+					$span.text('97%');
+				}
+			}
+		);
+
+	}
+
+	function animateTimeline($block) {
+		$(".timeline").addClass("active");
+	}
+
+	//  scrolling
+
+
   $(".header_block_right_burger").click(function() {
     $(".dropdown").addClass("active");
   });
@@ -77,6 +139,25 @@ $(document).ready(function() {
               }
           }
       ]
+  });
+
+  $('.projects_slider').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+	  fade: true,
+      prevArrow: $('.projects_arrows_prev'),
+      nextArrow: $('.projects_arrows_next')
+  });
+
+  $('.process').each(function () {
+    const $process = $(this);
+    $process.find('nav li').on('click', function () {
+      const target = $(this).data('target');
+      $process.find('nav li').removeClass('active');
+      $(this).addClass('active');
+      $process.find('.process_item').removeClass('active');
+      $process.find('.process_item[data-target="' + target + '"]').addClass('active');
+    });
   });
 
 });
